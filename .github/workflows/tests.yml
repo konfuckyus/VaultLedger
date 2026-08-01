@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Restore
+        run: dotnet restore VaultLedger.sln
+      - name: Build
+        run: dotnet build VaultLedger.sln --no-restore -c Release
+      - name: Unit tests
+        run: dotnet test tests/VaultLedger.UnitTests/VaultLedger.UnitTests.csproj --no-build -c Release --verbosity normal
+
+  integration:
+    name: Integration Tests (Testcontainers)
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Restore
+        run: dotnet restore VaultLedger.sln
+      - name: Build
+        run: dotnet build VaultLedger.sln --no-restore -c Release
+      - name: Integration tests
+        run: dotnet test tests/VaultLedger.IntegrationTests/VaultLedger.IntegrationTests.csproj --no-build -c Release --verbosity normal

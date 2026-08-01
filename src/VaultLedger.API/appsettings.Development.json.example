@@ -1,0 +1,34 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=vaultledger;Username=postgres;Password=YOUR_PASSWORD"
+  },
+  "Jwt": {
+    "Issuer": "VaultLedger",
+    "Audience": "VaultLedger",
+    "Secret": "REPLACE_WITH_A_LONG_RANDOM_SECRET_AT_LEAST_32_CHARS",
+    "AccessTokenMinutes": 15,
+    "RefreshTokenDays": 7
+  },
+  "Cors": {
+    "AllowedOrigins": [
+      "https://localhost:3000",
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "https://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://127.0.0.1:5173"
+    ]
+  },
+  "RateLimiting": {
+    "AuthPermitLimit": 5,
+    "AuthWindowSeconds": 60,
+    "TransactionsPermitLimit": 30,
+    "TransactionsWindowSeconds": 60
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

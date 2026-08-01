@@ -1,0 +1,52 @@
+## .NET
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.DotSettings.user
+
+## NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Secrets / env
+.env
+.env.*
+appsettings.*.local.json
+appsettings.Development.json
+appsettings.Production.json
+**/secrets.json
+
+## Test / coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+## Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/playwright-report/
+frontend/test-results/
+frontend/e2e/.runtime-env.json
+frontend/blob-report/
+frontend/playwright/.cache/
+
+## OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*~
