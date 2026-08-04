@@ -41,9 +41,11 @@ public sealed class DeadlockTransferTests
             try
             {
                 var t1 = svc1.TransferAsync(
-                    accountA.Id, accountB.Id, 10m, $"xfer-a2b-{i}-{Guid.NewGuid():N}");
+                    accountA.Id, accountB.Id, 10m, $"xfer-a2b-{i}-{Guid.NewGuid():N}",
+                    pin: TestDataSeeder.DefaultTransactionPin);
                 var t2 = svc2.TransferAsync(
-                    accountB.Id, accountA.Id, 15m, $"xfer-b2a-{i}-{Guid.NewGuid():N}");
+                    accountB.Id, accountA.Id, 15m, $"xfer-b2a-{i}-{Guid.NewGuid():N}",
+                    pin: TestDataSeeder.DefaultTransactionPin);
 
                 await Task.WhenAll(t1, t2);
             }

@@ -33,7 +33,8 @@ public sealed class RollbackAtomicityTests
 
         var svc = failScope.ServiceProvider.GetRequiredService<ITransactionService>();
 
-        var act = () => svc.SpendAsync(accountId, cardId, 25m, key);
+        var act = () => svc.SpendAsync(
+            accountId, cardId, 25m, key, pin: TestDataSeeder.DefaultTransactionPin);
         await act.Should().ThrowAsync<InvalidOperationException>()
             .WithMessage("*Simulated failure*");
 

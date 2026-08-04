@@ -11,6 +11,8 @@ namespace VaultLedger.IntegrationTests.Helpers;
 
 public static class TestDataSeeder
 {
+    public const string DefaultTransactionPin = "1234";
+
     public static async Task<(User User, Account Account)> SeedUserWithAccountAsync(
         IServiceScope scope,
         decimal openingBalance,
@@ -26,6 +28,7 @@ public static class TestDataSeeder
             email ?? $"user-{Guid.NewGuid():N}@test.local",
             hasher.Hash("Password123!"),
             UserRole.User);
+        user.SetTransactionPinHash(hasher.Hash(DefaultTransactionPin));
 
         await uow.Users.AddAsync(user);
         await uow.SaveChangesAsync();

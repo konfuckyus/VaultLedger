@@ -40,7 +40,12 @@ public sealed class PostgresFixture : IAsyncLifetime
         {
             DbAdapter = DbAdapter.Postgres,
             SchemasToInclude = ["public"],
-            TablesToIgnore = [new Table("__EFMigrationsHistory")]
+            // Keep migration history and reference seed data (budget categories).
+            TablesToIgnore =
+            [
+                new Table("__EFMigrationsHistory"),
+                new Table("budget_category_definitions")
+            ]
         });
     }
 

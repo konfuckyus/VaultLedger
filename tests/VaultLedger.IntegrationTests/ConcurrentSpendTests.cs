@@ -31,8 +31,10 @@ public sealed class ConcurrentSpendTests
         var svc1 = scope1.ServiceProvider.GetRequiredService<ITransactionService>();
         var svc2 = scope2.ServiceProvider.GetRequiredService<ITransactionService>();
 
-        var t1 = svc1.SpendAsync(accountId, cardId, 30m, $"spend-concurrent-{Guid.NewGuid():N}-a");
-        var t2 = svc2.SpendAsync(accountId, cardId, 20m, $"spend-concurrent-{Guid.NewGuid():N}-b");
+        var t1 = svc1.SpendAsync(accountId, cardId, 30m, $"spend-concurrent-{Guid.NewGuid():N}-a",
+            pin: TestDataSeeder.DefaultTransactionPin);
+        var t2 = svc2.SpendAsync(accountId, cardId, 20m, $"spend-concurrent-{Guid.NewGuid():N}-b",
+            pin: TestDataSeeder.DefaultTransactionPin);
 
         var results = await Task.WhenAll(t1, t2);
         results.Should().HaveCount(2);

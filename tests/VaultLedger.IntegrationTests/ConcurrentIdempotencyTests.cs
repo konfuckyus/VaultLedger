@@ -64,7 +64,8 @@ public sealed class ConcurrentIdempotencyTests
     {
         try
         {
-            var record = await svc.SpendAsync(accountId, cardId, amount, key);
+            var record = await svc.SpendAsync(
+                accountId, cardId, amount, key, pin: TestDataSeeder.DefaultTransactionPin);
             return (record, null);
         }
         catch (Exception ex)
