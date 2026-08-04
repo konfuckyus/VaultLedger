@@ -140,8 +140,13 @@ export function TransactionsPage() {
 
   function confirmPin() {
     if (!pinModal.open) return
-    if (pinModal.action === 'spend') void spend.run()
-    else void transfer.run()
+    if (pinModal.action === 'spend') {
+      transfer.clearFeedback()
+      void spend.run()
+    } else {
+      spend.clearFeedback()
+      void transfer.run()
+    }
   }
 
   const selectedAccount = accounts.find((a) => a.id === accountId)
