@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: vaultledger-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: MigrateOnStartup
+        value: "true"
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Jwt__Secret
+        sync: false
+      - key: CardHash__Secret
+        sync: false
+      - key: Cors__AllowedOrigins__0
+        sync: false
