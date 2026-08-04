@@ -53,7 +53,11 @@ export async function gotoTransactionsReady(page: Page) {
 
 export async function setTransactionPinViaUi(page: Page, pin = '1234') {
   await page.goto('/accounts')
-  const panel = page.locator('.panel', { hasText: 'İşlem PIN' })
+  // Prefer the panel whose heading is the PIN section — the dashboard panel also
+  // contains an Alert with "İşlem PIN" when the user has no PIN yet.
+  const panel = page.locator('section.panel').filter({
+    has: page.getByRole('heading', { name: "İşlem PIN'i" }),
+  })
   await expect(panel).toBeVisible({ timeout: 20_000 })
   const inputs = panel.locator('input')
   const count = await inputs.count()
