@@ -87,6 +87,7 @@ async function globalSetup() {
         // Long enough for multi-step flows; refresh test forces expiry manually.
         Jwt__AccessTokenSeconds: '120',
         Jwt__RefreshTokenDays: '7',
+        CardHash__Secret: 'VaultLedger_E2E_CardHash_Secret_ChangeMe_32!',
         MigrateOnStartup: 'true',
         DisableHttpsRedirection: 'true',
         Cors__AllowedOrigins__0: 'http://localhost:5173',
