@@ -24,9 +24,8 @@ test('insufficient balance shows a user-facing error', async ({ page }) => {
   await page.getByRole('button', { name: 'Harca' }).click()
   await confirmPinModal(page)
 
-  const alert = page.locator('.alert.error')
-  await expect(alert).toBeVisible()
-  await expect(alert).toContainText(/Yetersiz bakiye/i)
+  const alert = page.locator('.alert.error').filter({ hasText: /Yetersiz bakiye/i })
+  await expect(alert).toBeVisible({ timeout: 15_000 })
 })
 
 test('transfer insufficient balance shows Yetersiz bakiye toast', async ({
@@ -60,7 +59,7 @@ test('transfer insufficient balance shows Yetersiz bakiye toast', async ({
   await page.getByRole('button', { name: 'Transfer' }).click()
   await confirmPinModal(page)
 
-  const alert = page.locator('.alert.error')
-  await expect(alert).toBeVisible()
-  await expect(alert).toContainText(/Yetersiz bakiye/i)
+  // Spend panel may also show "aktif kart yok"; assert the insufficient-balance alert specifically.
+  const alert = page.locator('.alert.error').filter({ hasText: /Yetersiz bakiye/i })
+  await expect(alert).toBeVisible({ timeout: 15_000 })
 })

@@ -40,7 +40,10 @@ export async function logoutViaUi(page: Page) {
 /** After seeding an account in Postgres, force the UI to reload dashboard. */
 export async function gotoAccountsAndExpectAccount(page: Page, accountNumber: string) {
   await page.goto('/accounts')
-  await expect(page.getByText(accountNumber)).toBeVisible({
+  const accountsPanel = page.locator('section.panel').filter({
+    has: page.getByRole('heading', { name: 'Hesaplarım' }),
+  })
+  await expect(accountsPanel.getByText(accountNumber)).toBeVisible({
     timeout: 20_000,
   })
 }
