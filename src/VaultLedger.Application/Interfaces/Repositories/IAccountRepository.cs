@@ -10,6 +10,11 @@ public interface IAccountRepository : IRepository<Account>
     /// </summary>
     Task<Account?> GetByIdForUpdateAsync(Guid id, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Owner user id without tracking the account (safe before FOR UPDATE locks).
+    /// </summary>
+    Task<Guid?> GetOwnerUserIdAsync(Guid accountId, CancellationToken cancellationToken = default);
+
     Task<Account?> GetSystemClearingAccountAsync(CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<Account>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);

@@ -46,6 +46,12 @@ public sealed class AccountRepository : Repository<Account>, IAccountRepository
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+    public Task<Guid?> GetOwnerUserIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => DbSet.AsNoTracking()
+            .Where(x => x.Id == id)
+            .Select(x => (Guid?)x.UserId)
+            .FirstOrDefaultAsync(cancellationToken);
+
     public async Task<Account?> GetSystemClearingAccountAsync(CancellationToken cancellationToken = default)
     {
         return await DbSet.FirstOrDefaultAsync(

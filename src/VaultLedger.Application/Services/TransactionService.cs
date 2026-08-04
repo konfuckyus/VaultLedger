@@ -696,11 +696,13 @@ public sealed class TransactionService : ITransactionService
 
         ArgumentException.ThrowIfNullOrWhiteSpace(pin);
 
-        var account = await _unitOfWork.Accounts.GetByIdAsync(accountId, cancellationToken)
+        // Do not track Account here: a tracked entity with a stale xmin/RowVersion
+        // would break later FOR UPDATE + SaveChanges under concurrency.
+        var userId = await _unitOfWork.Accounts.GetOwnerUserIdAsync(accountId, cancellationToken)
             ?? throw new NotFoundException(nameof(Account), accountId);
 
-        var user = await _unitOfWork.Users.GetByIdAsync(account.UserId, cancellationToken)
-            ?? throw new NotFoundException(nameof(User), account.UserId);
+        var user = await _unitOfWork.Users.GetByIdAsync(userId, cancellationToken)
+            ?? throw new NotFoundException(nameof(User), userId);
 
         if (!user.HasTransactionPin)
         {
