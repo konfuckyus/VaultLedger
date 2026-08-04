@@ -59,8 +59,10 @@ test('full user flow: register → spend → transfer → history → logout', a
 
   await expect(page.locator('.tx-list li')).toHaveCount(2, { timeout: 20_000 })
   await expect(page.locator('.tx-list')).toContainText('Spend')
-  await expect(page.locator('.tx-list')).toContainText('Yemek')
   await expect(page.locator('.tx-list')).toContainText('Transfer')
+  // Card label is shown only in the expanded spend detail row.
+  await page.locator('.tx-list li').filter({ hasText: 'Spend' }).getByRole('button').click()
+  await expect(page.locator('.tx-list')).toContainText('Yemek')
 
   await logoutViaUi(page)
   await expect(page.getByRole('heading', { name: 'Giriş' })).toBeVisible()
